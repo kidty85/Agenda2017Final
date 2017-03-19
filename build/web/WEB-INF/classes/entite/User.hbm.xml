@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 mars 2017 23:48:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entite.User" table="user" catalog="agenda2017" optimistic-lock="version">
+        <id name="idUser" type="java.lang.Integer">
+            <column name="id_user" />
+            <generator class="identity" />
+        </id>
+        <property name="nom" type="string">
+            <column name="nom" length="30" not-null="true" />
+        </property>
+        <property name="prenom" type="string">
+            <column name="prenom" length="30" not-null="true" />
+        </property>
+        <property name="dateNaissance" type="date">
+            <column name="date_naissance" length="10" not-null="true" />
+        </property>
+        <property name="sexe" type="string">
+            <column name="sexe" length="2" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="50" not-null="true" unique="true" />
+        </property>
+        <property name="pwd" type="string">
+            <column name="pwd" length="50" not-null="true" />
+        </property>
+        <property name="isAdmin" type="boolean">
+            <column name="is_admin" not-null="true" />
+        </property>
+        <set name="partages" table="partage" inverse="true" lazy="false" fetch="join">
+            <key>
+                <column name="id_user" not-null="true" />
+            </key>
+            <one-to-many class="entite.Partage" />
+        </set>
+        <set name="amisesForIdUser1" table="amis" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_user1" not-null="true" />
+            </key>
+            <one-to-many class="entite.Amis" />
+        </set>
+        <set name="amisesForIdUser2" table="amis" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_user2" not-null="true" />
+            </key>
+            <one-to-many class="entite.Amis" />
+        </set>
+        <set name="agendas" table="agenda" inverse="true" lazy="false" fetch="join">
+            <key>
+                <column name="id_user" not-null="true" />
+            </key>
+            <one-to-many class="entite.Agenda" />
+        </set>
+        <set name="lienUserGroupes" table="lien_user_groupe" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_user" not-null="true" />
+            </key>
+            <one-to-many class="entite.LienUserGroupe" />
+        </set>
+        <set name="groupes" table="groupe" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_admin" not-null="true" />
+            </key>
+            <one-to-many class="entite.Groupe" />
+        </set>
+    </class>
+</hibernate-mapping>

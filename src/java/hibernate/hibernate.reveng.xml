@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="agenda2017"/>
+  <table-filter match-name="evenement"/>
+  <table-filter match-name="partage"/>
+  <table-filter match-name="amis"/>
+  <table-filter match-name="groupe"/>
+  <table-filter match-name="user"/>
+  <table-filter match-name="lien_user_groupe"/>
+  <table-filter match-name="agenda"/>
+</hibernate-reverse-engineering>

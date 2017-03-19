@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>  
+        <title>Accueil Agenda</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="style.css"></link>
+    </h:head>
+    <h:body>
+        <div style="height: 700px">
+            <div class="col-md-1" style="background:grey;height:100%"></div>
+            <div class="col-md-10" style="background:ghostwhite;height:100%">
+                <div id="top">
+                    <h1 style="position:absolute;right:20%;top:10px;"><b><em>Agenda partagé</em></b></h1>
+                </div>
+                <br/><br/>
+                <div class="col-md-6" style="display: inline-block; border-right: dashed; height: 70%">
+                    <center>
+                        <h3>Connexion</h3><br/><br/>
+                        <h:form id="connexionForm">
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Email : " />
+                                <p:inputText id="cnxEmail" value="#{connexionBean.email}"
+                                             requiredMessage="Email non renseigné" required="true" >
+                                    <f:validator validatorId="ConnexionValidator" />
+                                    <f:attribute name="cnxPwd" value="#{cnxPwd}" />
+                                </p:inputText>
+                                <p:outputLabel value="Mot de passe : " />
+                                <p:password id="cnxMdp" value="#{connexionBean.password}"
+                                            requiredMessage="Mot de passe non renseigné" required="true" 
+                                            binding="#{cnxPwd}" />
+                            </h:panelGrid>
+                            <br/><br/>
+                            <center>
+                                <h:commandButton id="connexionButton" value="Connexion"
+                                                 action="#{connexionBean.connexion}" />
+                            </center><br/>
+                            <h:message for="cnxEmail" style="color:red" /><br/>
+                            <h:message for="cnxMdp" style="color:red" /><br/>
+                            <br/>
+                        </h:form>
+                    </center>
+                </div>
+                <div class="col-md-6" style="display: inline-block; height: 100%">
+                    <center>
+                        <h3>Inscription</h3><br/><br/>
+                        <h:form id="inscriptionForm">
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Email : " />
+                                <p:inputText id="inscEmail" value="#{inscriptionBean.email}"
+                                             requiredMessage="Email à renseigner" required="true" >
+                                    <f:validator validatorId="InscriptionValidator"/>
+                                    <f:attribute name="inscNom" value="#{inscNom}"/>
+                                    <f:attribute name="inscPrenom" value="#{inscPrenom}"/>
+                                    <f:attribute name="inscSexe" value="#{inscSexe}"/>
+                                    <f:attribute name="inscMdp" value="#{inscMdp}"/>
+                                </p:inputText>
+
+                                <p:outputLabel value="Nom : " />
+                                <p:inputText id="nom" value="#{inscriptionBean.nom}"
+                                             requiredMessage="Nom à renseigner" required="true" 
+                                             binding="#{inscNom}"/>
+
+                                <p:outputLabel value="Prénom : " />
+                                <p:inputText id="prenom" value="#{inscriptionBean.prenom}"
+                                             requiredMessage="Prénom à renseigner" required="true" 
+                                             binding="#{inscPrenom}"/>
+
+                                <p:outputLabel value="Sexe :" />
+                                <p:selectOneRadio id="sexe" value="#{inscriptionBean.sexe}"
+                                                  requiredMessage="Sexe à renseigner" required="true" 
+                                                  binding="#{inscSexe}">
+                                    <f:selectItem itemLabel="Homme" itemValue="H"/>
+                                    <f:selectItem itemLabel="Femme" itemValue="F"/>
+                                </p:selectOneRadio>
+
+                                <p:outputLabel value="Date de naissance : " />
+                                <p:calendar id="dateNaissance" value="#{inscriptionBean.dateNaissance}"
+                                            requiredMessage="Date de naissance à renseigner" required="true">
+                                </p:calendar>
+
+                                <p:outputLabel value="Mot de passe : " />
+                                <p:inputText type="password" id="inscMdp" value="#{inscriptionBean.password}"
+                                             requiredMessage="Mot de passe à renseigner" required="true" 
+                                             title="8 caractères minimum"
+                                             binding="#{inscMdp}">
+                                    <f:validateLength minimum="8" maximum="20" />
+                                </p:inputText>
+
+                                <p:outputLabel value="Confirmez : " />
+                                <p:inputText type="password" id="inscMdpConfirm" 
+                                             value="#{inscriptionBean.passwordConfirm}" 
+                                             requiredMessage="Mot de passe à confirmer" required="true" 
+                                             title="8 caractères minimum">
+                                    <f:validateLength minimum="8" maximum="20" />
+                                </p:inputText>
+                                <br/>
+                            </h:panelGrid>
+                            <br/><br/>
+                            <center>
+                                <p:growl id="mess" life="2000" />
+                                <p:commandButton id="inscriptionButton"
+                                                 value="Inscription"
+                                                 update="mess"
+                                                 actionListener="#{inscriptionBean.inscription}" 
+                                                 styleClass="ui-priority-primary" />
+                            </center><br/>                            
+                            <h:message for="nom" style="color:red" /><br/>
+                            <h:message for="prenom" style="color:red" /><br/>
+                            <h:message for="sexe" style="color:red" /><br/>
+                            <h:message for="dateNaissance" style="color:red" /><br/>
+                            <h:message for="inscEmail" style="color:red" /><br/>
+                            <h:message for="inscMdp" style="color:red" /><br/>
+                            <h:message for="inscMdpConfirm" style="color:red" /><br/>
+                        </h:form>
+                    </center>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-1" style="background:grey;height:100%"></div>
+        </div>
+        <script type="text/javascript">
+            var password = document.getElementById("inscMdp");
+            var confirm_password = document.getElementById("inscMdpConfirm");
+
+            function validatePassword() {
+                if (password.value !== confirm_password.value) {
+                    confirm_password.setCustomValidity("Les mots de passe ne sont pas identiques !");
+                } else {
+                    confirm_password.setCustomValidity("");
+                }
+            }
+
+            password.onchange = validatePassword;
+            confirm_password.onkeyup = validatePassword;
+        </script>
+    </h:body>
+</html>

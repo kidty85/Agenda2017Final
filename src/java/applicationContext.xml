@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    
+    <bean id="DerbyDatasource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName">
+            <value>com.mysql.jdbc.Driver</value>
+        </property>
+        <property name="url">
+            <value>jdbc:mysql://localhost:8889/Agenda2017?zeroDateTimeBehavior=convertToNull</value>
+        </property>
+        <property name="username">
+            <value>root</value>
+        </property>
+        <property name="password">
+            <value>root</value>
+        </property>
+    </bean>
+    
+    <bean id="sessionFactoryBean"
+          class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource">
+            <ref bean="DerbyDatasource" />
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.cglib.use_reflection_optimizer">false</prop>
+                <!--prop key="hibernate.jdbc.use_get_generated_keys">true</prop-->
+            </props>
+        </property>
+        <property name="mappingResources">
+            <list>
+                <value>entite/Agenda.hbm.xml</value>
+                <value>entite/Amis.hbm.xml</value>
+                <value>entite/Evenement.hbm.xml</value>
+                <value>entite/Groupe.hbm.xml</value>
+                <value>entite/LienUserGroupe.hbm.xml</value>
+                <value>entite/Partage.hbm.xml</value>
+                <value>entite/User.hbm.xml</value>
+            </list>
+        </property>
+        
+        <!--<property name="annotatedClasses">
+            <list>
+                <value>entitee.Agenda</value>
+                <value>entitee.Amis</value>
+                <value>entitee.Evenement</value>
+                <value>entitee.Groupe</value>
+                <value>entitee.LienUserGroupe</value>
+                <value>entitee.Partage</value>
+                <value>entitee.User</value>
+            </list>
+        </property>-->
+        
+        
+    </bean>
+    
+    <bean id="agendaDao" class="agenda.dao.AgendaDao">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryBean" />
+        </property>
+    </bean>
+    <bean id="agendaMetier" class="agenda.metier.AgendaMetier">
+        <property name="agendaDao" ref="agendaDao" />
+    </bean>
+    
+    <bean id="amisDao" class="amis.dao.AmisDao">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryBean" />
+        </property>
+    </bean>
+    <bean id="amisMetier" class="amis.metier.AmisMetier">
+        <property name="amisDao" ref="amisDao" />
+    </bean>
+    
+    <bean id="evenementDao" class="evenement.dao.EvenementDao">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryBean" />
+        </property>
+    </bean>
+    <bean id="evenementMetier" class="evenement.metier.EvenementMetier">
+        <property name="evenementDao" ref="evenementDao" />
+    </bean>
+    
+    <bean id="groupeDao" class="groupe.dao.GroupeDao">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryBean" />
+        </property>
+    </bean>
+    <bean id="groupeMetier" class="groupe.metier.GroupeMetier">
+        <property name="groupeDao" ref="groupeDao" />
+    </bean>
+    
+    <bean id="lienUserGroupeDao" class="lug.dao.LienUserGroupeDao">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryBean" />
+        </property>
+    </bean>
+    <bean id="lienUserGroupeMetier" class="lug.metier.LienUserGroupeMetier">
+        <property name="lienUserGroupeDao" ref="lienUserGroupeDao" />
+    </bean>
+    
+    <bean id="partageDao" class="partage.dao.PartageDao">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryBean" />
+        </property>
+    </bean>
+    <bean id="partageMetier" class="partage.metier.PartageMetier">
+        <property name="partageDao" ref="partageDao" />
+    </bean>
+    
+    <bean id="userDao" class="user.dao.UserDao">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryBean" />
+        </property>
+    </bean>
+    <bean id="userMetier" class="user.metier.UserMetier">
+        <property name="userDao" ref="userDao" />
+    </bean>
+    
+</beans>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 mars 2017 23:48:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entite.Partage" table="partage" catalog="agenda2017" optimistic-lock="version">
+        <id name="idPartage" type="java.lang.Integer">
+            <column name="id_partage" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="agenda" class="entite.Agenda" fetch="join">
+            <column name="id_agenda" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="entite.User" fetch="join">
+            <column name="id_user" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

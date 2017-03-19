@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 mars 2017 23:48:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entite.Groupe" table="groupe" catalog="agenda2017" optimistic-lock="version">
+        <id name="idGroupe" type="java.lang.Integer">
+            <column name="id_groupe" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="user" class="entite.User" fetch="select">
+            <column name="id_admin" not-null="true" />
+        </many-to-one>
+        <property name="nom" type="string">
+            <column name="nom" length="50" not-null="true" />
+        </property>
+        <set name="lienUserGroupes" table="lien_user_groupe" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_groupe" not-null="true" />
+            </key>
+            <one-to-many class="entite.LienUserGroupe" />
+        </set>
+    </class>
+</hibernate-mapping>

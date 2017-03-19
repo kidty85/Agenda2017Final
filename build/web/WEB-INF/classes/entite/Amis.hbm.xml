@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 mars 2017 23:48:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entite.Amis" table="amis" catalog="agenda2017" optimistic-lock="version">
+        <id name="idAmis" type="java.lang.Integer">
+            <column name="id_amis" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="userByIdUser1" class="entite.User" fetch="select">
+            <column name="id_user1" not-null="true" />
+        </many-to-one>
+        <many-to-one name="userByIdUser2" class="entite.User" fetch="select">
+            <column name="id_user2" not-null="true" />
+        </many-to-one>
+        <property name="statut" type="string">
+            <column name="statut" length="4" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

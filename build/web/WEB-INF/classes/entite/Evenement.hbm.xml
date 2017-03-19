@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 mars 2017 23:48:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entite.Evenement" table="evenement" catalog="agenda2017" optimistic-lock="version">
+        <id name="idEvenement" type="java.lang.Integer">
+            <column name="id_evenement" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="agenda" class="entite.Agenda" fetch="select">
+            <column name="id_agenda" not-null="true" />
+        </many-to-one>
+        <property name="titre" type="string">
+            <column name="titre" length="50" not-null="true" />
+        </property>
+        <property name="lieu" type="string">
+            <column name="lieu" length="50" not-null="true" />
+        </property>
+        <property name="dateCreation" type="timestamp">
+            <column name="date_creation" length="19" not-null="true" />
+        </property>
+        <property name="dateMaj" type="timestamp">
+            <column name="date_maj" length="19" not-null="true" />
+        </property>
+        <property name="dateDebut" type="timestamp">
+            <column name="date_debut" length="19" not-null="true" />
+        </property>
+        <property name="dateFin" type="timestamp">
+            <column name="date_fin" length="19" not-null="true" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" />
+        </property>
+    </class>
+</hibernate-mapping>

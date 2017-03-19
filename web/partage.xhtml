@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Bienvenue</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="style.css"></link>
+    </h:head>
+    <h:body>
+        #{scheduleBean.setTypeAgenda("PAR")}
+        #{scheduleBean.init()}
+        <div style="height: 700px">
+            <div class="col-md-1" style="background:grey;height:100%"></div>
+            <div class="col-md-10" style="background:ghostwhite;height:100%">
+                <div id="top">
+                    <h1 style="position:absolute;right:20%;top:10px;"><b><em>Agenda partagé</em></b></h1>
+                </div>
+                <div id="left">
+                    <ul>
+                        <li><p><a href="#">#{scheduleBean.currentUser.nom} #{scheduleBean.currentUser.prenom}</a></p></li>
+                        <li><p><a href="private.xhtml">Privé</a></p></li>
+                        <li class="active"><p><a href="partage.xhtml">Partagé</a></p></li>
+                        <li><p><a href="amis.xhtml">Amis</a></p></li>
+                        <li><p><a href="index.xhtml">Déconnexion</a></p></li>
+                    </ul>
+                </div>
+                <div id="right">
+                    <h:form>
+                        <p:growl id="messages" showDetail="true" />
+
+                        <h:panelGrid columnClasses="value">
+                            <h3 style="margin-top: 0">Mon agenda partagé</h3>
+                            <p:schedule id="schedule" value="#{scheduleBean.eventModel}" widgetVar="myschedule" timeZone="GMT+2" locale="tr">
+                                <p:ajax event="dateSelect" listener="#{scheduleBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                                <p:ajax event="eventSelect" listener="#{scheduleBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                            </p:schedule>
+                        </h:panelGrid>
+
+                        <p:dialog widgetVar="eventDialog" header="Evénement" showEffect="clip" hideEffect="clip">
+                            <h:panelGrid id="eventDetails" columns="2">
+                                <p:outputLabel for="title" value="Titre : " />
+                                <p:inputText id="title" value="#{scheduleBean.event.title}" required="true" />
+
+                                <p:outputLabel for="from" value="De : " />
+                                <p:calendar id="from" value="#{scheduleBean.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" required="true"/>
+
+                                <p:outputLabel for="to" value="A : " />
+                                <p:calendar id="to" value="#{scheduleBean.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" required="true"/>
+
+                                <p:outputLabel for="lieu" value="Lieu : " />
+                                <p:inputText id="lieu" value="#{scheduleBean.event.description}" required="true" />
+
+                                <p:commandButton id="deleteButton" value="Supprimer" actionListener="#{scheduleBean.deleteEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>
+                                <p:commandButton id="addButton" value="Sauvegarder" actionListener="#{scheduleBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+
+                            </h:panelGrid>
+                        </p:dialog>
+                    </h:form>
+                </div>
+
+            </div>
+            <div class="col-md-1" style="background:grey;height:100%"></div>
+            <script type="text/javascript">
+                PrimeFaces.locales['tr'] = {
+                    closeText: 'Fermer',
+                    prevText: 'Préc',
+                    nextText: 'Suiv',
+                    currentText: 'actuel',
+                    monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+                        'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                    monthNamesShort: ['Janv', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin',
+                        'Juil', 'Août', 'Sept', 'Oct', 'Nov', 'Déc'],
+                    dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                    dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+                    dayNamesMin: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+                    weekHeader: 'Hf',
+                    firstDay: 1,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: '',
+                    month: 'Mois',
+                    week: 'Semaine',
+                    day: 'Jour',
+                    allDayText: 'Journée entière'
+                };
+            </script>
+            <style type="text/css">
+                .value {
+                    width: 1000px;
+                }
+            </style>
+        </div>
+    </h:body>
+</html>
